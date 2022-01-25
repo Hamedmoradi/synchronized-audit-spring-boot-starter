@@ -1,0 +1,85 @@
+{
+  "groups": [
+    {
+      "name": "bmi.audit",
+      "type": "ir.bmi.audit.autoconfigure.SpringLoggingAutoConfiguration",
+      "sourceType": "ir.bmi.audit.autoconfigure.SpringLoggingAutoConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "bmi.audit.servers",
+      "defaultValue": "localhost:9092"
+    },
+    {
+      "name": "bmi.audit.advertised.host.name",
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "bmi.audit.listeners",
+      "defaultValue": "SASL_PLAINTEXT://localhost:9090"
+    },
+    {
+      "name": "bmi.audit.delete.topic.enable",
+      "defaultValue": "true"
+    },
+    {
+      "name": "bmi.audit.security.inter.broker.protocol",
+      "defaultValue": "SAPLAINTEXT"
+    },
+    {
+      "name": "bmi.audit.sasl.mechanism.inter.broker.protocol",
+      "defaultValue": "PLAIN"
+    },
+    {
+      "name": "bmi.audit.sasl.enabled.mechanisms",
+      "defaultValue": "PLAIN"
+    },
+    {
+      "name": "bmi.audit.advertised.listeners",
+      "defaultValue": "SASL_PLAINTEXT://localhost:9090"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.retries",
+      "defaultValue": "0"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.batch-size",
+      "defaultValue": "100000"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.request.timeout.ms",
+      "defaultValue": "30000"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.linger.ms",
+      "defaultValue": "1"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.acks",
+      "defaultValue": "0"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.buffer-memory",
+      "defaultValue": "33554432"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.max.block.ms",
+      "defaultValue": "5000"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.bootstrap-servers",
+      "defaultValue": "localhost:9092,localhost:29092"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.key-serializer",
+      "type": "org.apache.kafka.common.serialization.StringSerializer",
+      "sourceType": "org.apache.kafka.common.serialization.StringSerializer"
+    },
+    {
+      "name": "bmi.audit.spring.kafka.producer.value-serializer",
+      "type": "org.apache.kafka.common.serialization.StringSerializer",
+      "sourceType": "org.apache.kafka.common.serialization.StringSerializer"
+    }
+  ]
+}

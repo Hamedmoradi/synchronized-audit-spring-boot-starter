@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://www.bmi.ir/xml/ns/audit" >
+    <server> <!-- should point to the real audit server in production -->
+        <service-url>http://log1:9081/audit/audit</service-url>
+    </server>
+    <headersFilter>branchCode, userName</headersFilter>
+    <maskers>
+        <masker>
+            <masker-class>ir.bmi.audit.client.masking.commons.JsonValueMasker</masker-class>
+            <finder-class>ir.bmi.audit.client.masking.commons.JsonValueFinder</finder-class>
+
+            <!-- comma separated fields to be masked in json payloads -->
+            <fields>pin2, pin, password</fields>
+            <url-pattern>/*</url-pattern>
+        </masker>
+        <masker>
+            <masker-class>ir.bmi.audit.client.masking.EmptyJsonMasker</masker-class>
+            <url-pattern>/*/attachments</url-pattern>
+        </masker>
+    </maskers>
+</configuration>
