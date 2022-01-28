@@ -28,9 +28,6 @@ public class AuditLogProducer {
         }catch (RuntimeException runtimeException){
             try {
                 Files.write(Paths.get("src/main/resources/kafkaMessageFile.txt"), Collections.singleton(message + System.lineSeparator()), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-                FileWriter myWriter = new FileWriter("filename.txt");
-                myWriter.write(message);
-                myWriter.close();
                 System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
                 System.out.println("An error occurred.");
