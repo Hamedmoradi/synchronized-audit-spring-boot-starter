@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import ir.bmi.audit.client.infra.HttpServletResponseCopier;
 import ir.bmi.audit.model.ResponseInfo;
+import ir.bmi.audit.util.MessageBuilder;
 import ir.bmi.audit.util.UniqueIDGenerator;
 import ir.bmi.audit.wrapper.SpringResponseWrapper;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
@@ -28,7 +28,6 @@ import ir.bmi.audit.client.config.ConfigurationFactory;
 import ir.bmi.audit.client.infra.HttpServletRequestCopierWrapper;
 import ir.bmi.audit.client.infra.http.HttpHeader;
 import ir.bmi.audit.client.infra.http.HttpHeaderUtil;
-import ir.bmi.audit.model.Message;
 import ir.bmi.audit.model.RequestInfo;
 import ir.bmi.audit.wrapper.SpringRequestWrapper;
 
@@ -225,20 +224,6 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
         return body;
     }
 
-    public void auditRequest(RequestInfo requestInfo, ServletRequest request) throws IOException {
-        log.trace("6.Started Sending Request #{} to Audit Server", requestInfo.Id);
-        log.info("implement kafka send message");
-        Message message = new Message(requestInfo, "auditRequest", ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION));
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(message);
-        json.replaceAll(".*\": null(,)?\\r\\n", "");
-        log.info(json);
-        ;
-        auditLogProducer.sendMessage(json, TOPIC);
-        log.debug("audit kafka was sent");
-
-    }
-
     private static InetAddress getLocalHostLANAddress() throws UnknownHostException {
         try {
             InetAddress candidateAddress = null;
@@ -349,14 +334,16 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
     private void auditResponse(ResponseInfo responseInfo, ServletRequest request) throws IOException {
 
         log.info("implement kafka send message");
-        Message message = new Message(responseInfo, "auditResponse", ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION));
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(message);
-        json.replaceAll(".*\": null(,)?\\r\\n", "");
-        log.debug(json);
+        String json = MessageBuilder.getResponseMessage(responseInfo, (HttpServletRequest) request);
         auditLogProducer.sendMessage(json, TOPIC);
         log.debug("audit kafka was sent");
     }
 
-
+    public void auditRequest(RequestInfo requestInfo, ServletRequest request) throws IOException {
+        log.trace("6.Started Sending Request #{} to Audit Server", requestInfo.Id);
+        log.info("implement kafka send message");
+        String json = MessageBuilder.getRequestMessage(requestInfo, (HttpServletRequest) request);
+        auditLogProducer.sendMessage(json, TOPIC);
+        log.debug("audit kafka was sent");
+    }
 }

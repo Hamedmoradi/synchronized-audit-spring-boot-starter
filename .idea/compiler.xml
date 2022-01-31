@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="audit-logging-spring-boot-starter" />
+        <module name="reactive-audit-logging-spring-boot-starter" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="audit-spring-boot-sample-app" target="1.6" />
+      <module name="procuder" target="1.6" />
+      <module name="producer-spring-boot-autoconfigure" target="11" />
+      <module name="producer-spring-boot-starter" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

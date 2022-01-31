@@ -1,14 +1,17 @@
 package ir.bmi.audit.client.kafka;
 
+import ir.bmi.audit.util.MessageBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.*;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.stereotype.Component;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Collections;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * hamedMoradi.mailsbox@gmail.com
@@ -17,23 +20,35 @@ import java.util.Collections;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+@EnableRetry
 public class AuditLogProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(String message, String topic)  {
+    private final RestTemplate restTemplate = new RestTemplate();
+
+//    @Value("${bmi.audit.consumer.server:consumerServer:8585/consumer/}")
+//    private String consumerServer;
+
+
+    public void sendMessage(String message, String topic) {
         log.info("$$$ -> Producing message --> {}", message);
         try {
-            kafkaTemplate.send( message, topic);
-        }catch (RuntimeException runtimeException){
-            try {
-                Files.write(Paths.get("src/main/resources/kafkaMessageFile.txt"), Collections.singleton(message + System.lineSeparator()), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-                System.out.println("Successfully wrote to the file.");
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
+            kafkaTemplate.send(message, topic).get(5, TimeUnit.SECONDS);
 
-        }
+        } catch (ExecutionException | InterruptedException | TimeoutException | RuntimeException exception){
+            exception.printStackTrace();
+            auditApiCall(message, MessageBuilder.getToken(message), "http://localhost:8585/consumer/");
         }
     }
+
+
+    private void auditApiCall(String message, String token, String url) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>(message, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    }
+}
+

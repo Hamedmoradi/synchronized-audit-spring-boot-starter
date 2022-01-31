@@ -1,17 +1,15 @@
 package ir.bmi.audit.client.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import ir.bmi.audit.client.kafka.AuditLogProducer;
+import ir.bmi.audit.util.MessageBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import ir.bmi.audit.client.config.AuditConfiguration;
 import ir.bmi.audit.client.config.ConfigurationFactory;
 import ir.bmi.audit.client.infra.http.MediaType;
 import ir.bmi.audit.client.serialization.SerializationHelper;
-import ir.bmi.audit.model.Message;
 import ir.bmi.audit.model.RequestInfo;
 import ir.bmi.audit.model.ResponseInfo;
 
@@ -124,12 +122,7 @@ public class ErrorHandler extends HttpServlet {
     }
 
     private void sendAudit(ResponseInfo responseInfo,HttpServletRequest request) throws IOException {
-
-        log.info("implement kafka send message");
-        Message message = new Message(responseInfo, "auditResponse",((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION));
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(message);
-        json.replaceAll(".*\": null(,)?\\r\\n", "");
+        String json=MessageBuilder.getResponseMessage(responseInfo,request);
         log.info("implement kafka send message");
         auditLogProducerForRequest.sendMessage(json,TOPIC);
 
