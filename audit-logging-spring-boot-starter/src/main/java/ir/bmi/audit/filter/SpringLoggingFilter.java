@@ -149,7 +149,7 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
 
     @SneakyThrows
     private RequestInfo createRequestInfo(ServletRequest request) {
-        String requestId = UUID.randomUUID().toString();
+        String requestId = ((SpringRequestWrapper) request).getHeader("traceId");
         RequestInfo info = new RequestInfo();
         HttpServletRequest req = (HttpServletRequest) request;
         Principal principal = req.getUserPrincipal();
@@ -302,7 +302,7 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
         ResponseInfo responseInfo = new ResponseInfo();
         if (principal != null)
             responseInfo.username = principal.getName();
-        responseInfo.Id = UUID.randomUUID().toString();
+        responseInfo.Id = wrappedRequest.getHeader("traceId");
         responseInfo.requestId = requestId;
 //
         if (log.isTraceEnabled())

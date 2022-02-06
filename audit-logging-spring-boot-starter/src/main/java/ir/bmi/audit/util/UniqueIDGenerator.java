@@ -1,5 +1,6 @@
 package ir.bmi.audit.util;
 
+import ir.bmi.audit.wrapper.SpringRequestWrapper;
 import org.slf4j.MDC;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,12 @@ public class UniqueIDGenerator {
         MDC.clear();
         String requestId = request.getHeader(REQUEST_ID_HEADER_NAME);
         if (requestId == null)
-            requestId = UUID.randomUUID().toString();
+            requestId = request.getHeader("traceId");
         MDC.put(REQUEST_ID_HEADER_NAME, requestId);
 
         String correlationId = request.getHeader(CORRELATION_ID_HEADER_NAME);
         if (correlationId == null)
-            correlationId = UUID.randomUUID().toString();
+            correlationId = request.getHeader("traceId");
         MDC.put(CORRELATION_ID_HEADER_NAME, correlationId);
     }
 

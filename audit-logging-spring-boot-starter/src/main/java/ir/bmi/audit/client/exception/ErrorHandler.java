@@ -112,7 +112,7 @@ public class ErrorHandler extends HttpServlet {
         Principal principal = request.getUserPrincipal();
         ResponseInfo responseInfo = new ResponseInfo();
         if (principal != null) responseInfo.username = principal.getName();
-        responseInfo.Id = UUID.randomUUID().toString();
+        responseInfo.Id = request.getHeader("traceId");
         responseInfo.requestId = (request.getAttribute(RequestInfo.REQUEST_ID) == null) ? null : request.getAttribute(RequestInfo.REQUEST_ID).toString();
         responseInfo.payload = SerializationHelper.serialize(throwable);
         responseInfo.date = Calendar.getInstance().getTime();

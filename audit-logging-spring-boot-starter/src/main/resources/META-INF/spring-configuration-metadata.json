@@ -49,11 +49,11 @@
     },
     {
       "name": "bmi.audit.spring.kafka.producer.request.timeout.ms",
-      "defaultValue": "1000"
+      "defaultValue": "3000"
     },
     {
       "name": "bmi.audit.spring.kafka.producer.request.autostartup",
-      "defaultValue": "true"
+      "defaultValue": "false"
     },
     {
       "name": "bmi.audit.spring.kafka.producer.linger.ms",
@@ -69,7 +69,7 @@
     },
     {
       "name": "bmi.audit.spring.kafka.producer.max.block.ms",
-      "defaultValue": "0"
+      "defaultValue": "5000"
     },
     {
       "name": "bmi.audit.max.block.ms",
