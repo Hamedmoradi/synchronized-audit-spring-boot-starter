@@ -12,27 +12,4 @@
 		<module>audit-logging-spring-boot-starter</module>
 		<module>reactive-audit-logging-spring-boot-starter</module>
 	</modules>
-	<scm>
-		<connection>scm:git:https://vcs.sadad.co.ir/scm/payment/bmi-api.git</connection>
-		<developerConnection>scm:git:https://vcs.sadad.co.ir/scm/payment/bmi-api.git
-		</developerConnection>
-		<url>https://vcs.sadad.co.ir/scm/payment/bmi-api.git</url>
-	</scm>
-	<distributionManagement>
-		<repository>
-			<id>groups-public</id>
-			<name>Nexus Releases</name>
-			<url>https://repo.sadad.co.ir/repository/baam-maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>groups-public</id>
-			<name>Nexus Snapshot</name>
-			<url>https://repo.sadad.co.ir/repository/baam-maven-snapshots/</url>
-		</snapshotRepository>
-		<site>
-			<id>groups-public</id>
-			<name>Nexus Sites</name>
-			<url>https://repo.sadad.co.ir/repository/baam-maven-group/</url>
-		</site>
-	</distributionManagement>
 </project>
