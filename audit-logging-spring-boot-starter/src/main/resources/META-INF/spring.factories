@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-ir.bmi.audit.autoconfigure.SpringLoggingAutoConfiguration
+auditLogger.autoconfigure.SpringLoggingAutoConfiguration

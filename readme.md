@@ -1,6 +1,6 @@
 ## Logging with Spring Boot and Elastic Stack  [![Twitter](https://img.shields.io/twitter/follow/piotr_minkowski.svg?style=social&logo=twitter&label=Follow%20Me)](https://twitter.com/piotr_minkowski)
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ir.bmi.audit/audit-logging-spring-boot-starter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ir.bmi.audit/audit-logging-spring-boot-starter)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/audit.logger/audit-logging-spring-boot-starter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/audit.logger/audit-logging-spring-boot-starter)
 [![CircleCI](https://circleci.com/gh/piomin/spring-boot-logging.svg?style=shield)](https://circleci.com/gh/piomin/spring-boot-logging)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=piomin_spring-boot-logging&metric=alert_status)](https://sonarcloud.io/dashboard?id=piomin_spring-boot-logging)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=piomin_spring-boot-logging&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=piomin_spring-boot-logging)
@@ -28,7 +28,7 @@ In short, let’s begin from a brief review of main features provided by audit-l
 The library is published on Maven Central. Current version is `1.2.2.RELEASE`
 ```
 <dependency>
-  <groupId>ir.bmi.audit</groupId>
+  <groupId>audit.logger</groupId>
   <artifactId>audit-logging-spring-boot-starter</artifactId>
   <version>1.2.2.RELEASE</version>
 </dependency>
