@@ -25,12 +25,12 @@ In short, let’s begin from a brief review of main features provided by audit-l
 4. It is auto-configurable Spring Boot library – you don’t have to do anything more than including it as a dependency to your application to make it work
 
 ## Getting started          
-The library is published on Maven Central. Current version is `1.2.2.RELEASE`
+The library is published on Maven Central. Current version is `1.1.1.RELEASE`
 ```
 <dependency>
   <groupId>audit.logger</groupId>
   <artifactId>audit-logging-spring-boot-starter</artifactId>
-  <version>1.2.2.RELEASE</version>
+  <version>1.1.1.RELEASE</version>
 </dependency>
 ```
 
