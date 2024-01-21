@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>audit.logger</groupId>
 	<artifactId>audit-logging-spring-boot-starter</artifactId>
-	<version>1.0.0.RELEASE</version>
+	<version>1.1.1.RELEASE</version>
 	<name>audit-logging-spring-boot-starter</name>
 	<description>Library for HTTP logging with Spring Boot</description>
 	<developers>
@@ -215,9 +215,13 @@
 		</profile>
 	</profiles>
 	<distributionManagement>
+		<repository>
+			<id>maven-releases</id>
+			<url>https://nexus.ubiprocess.ir/#browse/browse:maven-releases</url>
+		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
-			<url>https://nexus.ubiprocess.ir/nexus/content/repositories/snapshots</url>
+			<url>https://nexus.ubiprocess.ir/#browse/browse:maven-snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
