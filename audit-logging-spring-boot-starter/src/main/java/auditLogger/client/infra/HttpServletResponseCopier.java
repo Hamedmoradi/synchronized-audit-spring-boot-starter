@@ -34,6 +34,7 @@ public class HttpServletResponseCopier extends HttpServletResponseWrapper {
         super.setStatus(sc);
     }
 
+    @Override
     public int getStatus() {
         return httpStatus;
     }

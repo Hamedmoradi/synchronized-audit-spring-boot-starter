@@ -36,7 +36,7 @@ public class ErrorHandler extends HttpServlet {
 
     private String auditResponseServiceURL;
     private final AuditLogProducer auditLogProducerForRequest;
-    private AuditConfiguration configuration = ConfigurationFactory.auditConfiguration();
+    private AuditConfiguration configuration = ConfigurationFactory.auditConfigurationAsync();
     private  static final String TOPIC = "audit_logger";
 
     @Override

@@ -30,8 +30,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class SpringLoggingAutoConfiguration {
 
-    private String ignorePatterns;
-    private boolean logHeaders;
     @Value("${spring.kafka.producer.bootstrap-servers:kafka:9092}")
     private String kafkaServer;
     @Value("${spring.kafka.producer.batch-size:100000}")
@@ -58,7 +56,7 @@ public class SpringLoggingAutoConfiguration {
 
     @Bean
     public SpringLoggingFilter loggingFilter() {
-        return new SpringLoggingFilter(generator(), ignorePatterns, logHeaders, auditLogProduceForRequest);
+        return new SpringLoggingFilter(generator(), auditLogProduceForRequest);
     }
 
     @ConditionalOnMissingBean
@@ -90,21 +88,5 @@ public class SpringLoggingAutoConfiguration {
     public AuditLogProducer auditLogProducer(KafkaTemplate<String, String> kafkaTemplate) {
 
         return new AuditLogProducer(kafkaTemplate);
-    }
-
-    public String getIgnorePatterns() {
-        return ignorePatterns;
-    }
-
-    public void setIgnorePatterns(String ignorePatterns) {
-        this.ignorePatterns = ignorePatterns;
-    }
-
-    public boolean isLogHeaders() {
-        return logHeaders;
-    }
-
-    public void setLogHeaders(boolean logHeaders) {
-        this.logHeaders = logHeaders;
     }
 }

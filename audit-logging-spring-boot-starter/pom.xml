@@ -14,7 +14,7 @@
 		</developer>
 	</developers>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 		<commons-io.version>2.6</commons-io.version>
 		<javax-servlet.version>4.0.1</javax-servlet.version>
 		<spring.version>5.2.3.RELEASE</spring.version>
@@ -134,11 +134,6 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>1.7.3</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-webflux</artifactId>-->
-<!--			<version>2.6.3</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -204,8 +199,25 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>https://nexus.ubiprocess.ir/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

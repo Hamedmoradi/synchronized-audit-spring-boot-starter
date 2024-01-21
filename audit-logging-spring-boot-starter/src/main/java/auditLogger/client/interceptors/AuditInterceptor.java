@@ -6,6 +6,7 @@ import auditLogger.model.MethodCall;
 import auditLogger.model.RequestInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -34,13 +35,13 @@ import java.util.UUID;
 @Component
 @EnableAspectJAutoProxy
 @Slf4j
-public class AuditLoggerInterceptor {
+public class AuditInterceptor {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     HttpServletRequest httpRequest;
-    AuditConfiguration configuration = ConfigurationFactory.auditConfiguration();
+    AuditConfiguration configuration = ConfigurationFactory.auditConfigurationAsync();
 
     @Around("@annotation(audit.client.interceptors.AuditLogger)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -70,7 +71,6 @@ public class AuditLoggerInterceptor {
             Message message = new Message(methodCall, "auditMethodCall",( httpRequest).getHeader(HttpHeaders.AUTHORIZATION));
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(message);
-
             log.info("{} param is {}.", methodName, Arrays.toString(point.getArgs()));
             kafkaTemplate.send("audit_logger", json);
         }
@@ -80,15 +80,13 @@ public class AuditLoggerInterceptor {
             return result;
     }
 
-    private Method getCurrentMethod(ProceedingJoinPoint point) throws Exception {
-        try {
+    @SneakyThrows
+    private Method getCurrentMethod(ProceedingJoinPoint point){
+
             Signature sig = point.getSignature();
             MethodSignature msig = (MethodSignature) sig;
             Object target = point.getTarget();
             return target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
-        } catch (NoSuchMethodException e) {
-            throw new Exception(e);
-        }
     }
 
 }

@@ -32,7 +32,7 @@ public class ResponseInfo extends MessageAuditType implements Serializable{
 
     public int status;
 
-    public Map<String, Object> headers;
+    public Map<String, String> headers;
 
     public String contentType;
 }

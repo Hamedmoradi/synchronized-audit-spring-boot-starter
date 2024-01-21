@@ -31,6 +31,10 @@ public class AuditXml {
         @XmlElement(namespace = "audit",name = "finder-class")
         public String finder;
 
+
+        @XmlElement(namespace = "fields",name = "fields-class")
+        public String fields;
+
         @XmlElement(namespace = "audit",name = "fields")
         public String filters;
 

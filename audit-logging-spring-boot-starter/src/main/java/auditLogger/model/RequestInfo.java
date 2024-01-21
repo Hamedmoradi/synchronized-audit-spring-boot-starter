@@ -37,27 +37,18 @@ public class RequestInfo extends MessageAuditType implements Externalizable{
 
     public String customerId;
 
-    public String branchId;
-
-    //	as returned by the getRemoteHost() method
     public String remoteHost;
 
-    //	value of the "X-Forwarded-For" header
     public String xForwardedFor;
 
-    //	as returned by getMethod() method
     public String httpMethod;
 
-    //	as returned by getRequestURL() method
     public String requestURL;
 
-    //	as returned by getQueryString() method
     public String queryString;
 
-    //	value of the "User-Agent" header
     public String userAgent;
 
-    // a uuid which will be generated based on each request
     public String Id;
 
     public String serverAddr;
@@ -73,7 +64,6 @@ public class RequestInfo extends MessageAuditType implements Externalizable{
         out.writeObject(date);
         out.writeUTF(payload == null ? "" : payload);
         out.writeUTF(customerId == null ? "" : customerId);
-        out.writeUTF(branchId == null ? "" : branchId);
         out.writeUTF(remoteHost == null ? "" : remoteHost);
         out.writeUTF(xForwardedFor == null ? "" : xForwardedFor);
         out.writeUTF(httpMethod == null ? "" : httpMethod);
@@ -92,7 +82,6 @@ public class RequestInfo extends MessageAuditType implements Externalizable{
         date = (Date) in.readObject();
         payload = in.readUTF();
         customerId = in.readUTF();
-        branchId = in.readUTF();
         remoteHost = in.readUTF();
         xForwardedFor = in.readUTF();
         httpMethod = in.readUTF();
@@ -112,7 +101,6 @@ public class RequestInfo extends MessageAuditType implements Externalizable{
                 ", date=" + date +
                 ", payload='" + payload + '\'' +
                 ", customerId='" + customerId + '\'' +
-                ", branchId='" + branchId + '\'' +
                 ", remoteHost='" + remoteHost + '\'' +
                 ", xForwardedFor='" + xForwardedFor + '\'' +
                 ", httpMethod='" + httpMethod + '\'' +
