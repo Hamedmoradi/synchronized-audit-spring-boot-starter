@@ -2,7 +2,6 @@ package auditLogger.filter;
 
 import auditLogger.client.config.AuditConfiguration;
 import auditLogger.client.config.ConfigurationFactory;
-import auditLogger.client.infra.HttpServletRequestCopierWrapper;
 import auditLogger.client.infra.HttpServletResponseCopier;
 import auditLogger.client.infra.http.HttpHeader;
 import auditLogger.client.infra.http.HttpHeaderUtil;
@@ -142,9 +141,6 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
 
             request.setAttribute(RequestInfo.REQUEST_ID, info.Id);
             auditRequest(info, request);
-            LOGGER.info("*************Request: method={}, uri={}, payload={}, audit={}", wrappedRequest.getMethod(),
-                    wrappedRequest.getRequestURI(), IOUtils.toString(wrappedRequest.getInputStream(),
-                            wrappedRequest.getCharacterEncoding()));
             try {
                 chain.doFilter(wrappedRequest, wrappedResponse);
             } catch (Exception e) {
@@ -152,7 +148,6 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
                 throw e;
             }
             createResponseInfo(wrappedRequest, wrappedResponse);
-            LOGGER.info("Response({} ms): status={}, payload={}, audit={}", IOUtils.toString(wrappedResponse.getContentAsByteArray(), wrappedResponse.getCharacterEncoding()));
         }
     }
 
@@ -192,9 +187,7 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
         if (((HttpServletRequest) request).getHeader(HttpHeader.CONTENT_TYPE) != null) {
             info.contentType = String.format("%.129s", ((HttpServletRequest) request).getHeader(HttpHeader.CONTENT_TYPE));
         }
-        HttpServletRequestCopierWrapper requestCopier = new HttpServletRequestCopierWrapper((HttpServletRequest) request, info.Id);
-        info.payload = getBody(requestCopier);
-        info.payload = configuration.getMaskerByRequest((HttpServletRequest) request).mask(info.payload);
+        info.setPayload(IOUtils.toString(request.getInputStream(), request.getCharacterEncoding()));
         info.serverAddr = LocalHostLandAddress.getHostName() + "/" + LocalHostLandAddress.getHostAddress() + ":" + request.getServerPort();
         info.queryString = ((HttpServletRequest) request).getQueryString();
         info.date = Calendar.getInstance().getTime();
@@ -221,11 +214,11 @@ public class SpringLoggingFilter extends OncePerRequestFilter {
         responseInfo.Id = wrappedRequest.getHeader("traceId");
         responseInfo.requestId = requestId;
         String resBody = new String(copy, StandardCharsets.UTF_8);
-        responseInfo.payload = configuration.getMaskerByRequest(wrappedRequest).mask(resBody);
         responseInfo.contentType = responseCopier.getHeader(HttpHeader.CONTENT_TYPE);
         responseInfo.date = Calendar.getInstance().getTime();
         responseInfo.status = wrappedResponse.getStatus();
         responseInfo.headers = wrappedResponse.getAllHeaders();
+        responseInfo.payload = IOUtils.toString(wrappedResponse.getContentAsByteArray(), wrappedResponse.getCharacterEncoding());
         auditResponse(responseInfo, wrappedRequest);
     }
 
