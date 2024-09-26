@@ -18,10 +18,10 @@
 	</developers>
 	<properties>
 		<java.version>1.8</java.version>
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<javax-servlet.version>4.0.1</javax-servlet.version>
-		<spring.version>5.2.3.RELEASE</spring.version>
-		<spring.boot.version>2.1.4.RELEASE</spring.boot.version>
+		<spring.version>5.2.22.RELEASE</spring.version>
+		<spring.boot.version>2.5.15</spring.boot.version>
 		<slf4j.version>1.7.26</slf4j.version>
 	</properties>
 	<dependencies>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.2.3</version>
+			<version>1.2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
